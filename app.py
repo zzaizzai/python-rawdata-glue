@@ -1,5 +1,5 @@
 import pandas as pd
-
+from typing import List
 
 class sendansiken():
 
@@ -12,8 +12,34 @@ class sendansiken():
         df_temp = df.reset_index()
         self.df = df_temp
 
-    def next_col(self):
+
+    def get_all_max_values(self) -> List[dict]:
+
+        list_result = []
+        try:
+            while(True):
+                list_result.append(self.get_max_values())
+                self.next_col()
+        except Exception as e:
+            pass
+
+        print(list_result)
+
+        return list_result
+
+    def next_col(self) -> None:
         self.index_col_now  = self.index_col_now + 2  
+
+    def get_max_values(self) -> dict:
+        dict_values : dict  = {}
+
+        index_row = self.get_index_max_value(self.index_col_now)
+        dict_values["elon"] = self.get_value(self.index_col_now - 1 , index_row)
+        dict_values["strength"] = self.get_value(self.index_col_now, index_row)
+        dict_values["col"] = self.index_col_now
+
+        return dict_values
+    
 
     def get_index_max_value(self, index_col: int) -> int:
         index_max = self.df.iloc[:,index_col]
@@ -21,7 +47,7 @@ class sendansiken():
         max_index: int = -1 
         for i, value in enumerate(index_max):
         
-            if value.isalpha():
+            if type(value) is str:
                 continue
             
             if float(value) > max_value :
@@ -51,9 +77,9 @@ class sendansiken():
     
 
 if __name__ == "__main__":
-    df = pd.read_table('MG-.crv', encoding='shift_jis', header=0)
+    # df = pd.read_table('MG-.xlsx', header=0)
+    df = pd.read_excel('MG-.xlsx', header=0)
     aa = sendansiken(df)
     index_max = aa.get_index_max_value(3)
-    print(aa.get_value(index_col=2, inedx_row=index_max))
-    print(aa.get_value(index_col=3, inedx_row=index_max))
+    aa.get_all_max_values()
     
