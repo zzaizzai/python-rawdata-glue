@@ -1,13 +1,15 @@
-import pandas as pd
 from typing import List
 
-class sendansiken():
+import pandas as pd
+
+
+class SendanSiken():
 
     df: pd.DataFrame
     index_col_now : int = 3
 
     def __init__(self, df: pd.DataFrame):
-        df_temp = df 
+        df_temp = df
         df_temp = df.drop(df.index[0])
         df_temp = df.reset_index()
         self.df = df_temp
@@ -20,7 +22,7 @@ class sendansiken():
             while(True):
                 list_result.append(self.get_max_values())
                 self.next_col()
-        except Exception as e:
+        except:
             pass
 
         print(list_result)
@@ -72,14 +74,10 @@ class sendansiken():
     def get_col_now(self) -> int:
         return self.get_col_now
     
-    def get_data(self) -> pd.DataFrame:
-        return self.data
-    
 
 if __name__ == "__main__":
-    # df = pd.read_table('MG-.xlsx', header=0)
-    df = pd.read_excel('MG-.xlsx', header=0)
-    aa = sendansiken(df)
+    df = pd.read_table('MG-.crv', encoding='shift_jis', header=0)
+    aa = SendanSiken(df)
     index_max = aa.get_index_max_value(3)
     aa.get_all_max_values()
     
