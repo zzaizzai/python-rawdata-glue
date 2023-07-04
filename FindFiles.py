@@ -52,6 +52,3 @@ if __name__ == "__main__":
     ff = FindFiles()
     ff.print_dir_names()
     ff.print_list_files_path()
-
-
-

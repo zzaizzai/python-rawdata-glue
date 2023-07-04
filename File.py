@@ -36,4 +36,4 @@ class File:
         return self.path[len(self.dir_top_level_path) + 1:]
 
     def __str__(self) -> str:
-        return self._path
+        return r''+ self._path
