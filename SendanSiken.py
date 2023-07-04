@@ -46,6 +46,8 @@ class SendanSiken():
 
         # TODO get average tension 
 
+        
+
         # print("  " +  self.file_c.get_labo_no())
         print("  " +  self.file_c.get_dir_name_upper_level())
         # pprint.pprint(list_result, indent=2)
