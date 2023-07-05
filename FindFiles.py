@@ -15,10 +15,10 @@ class FindFiles:
         load_dotenv(dotenv_path)
         
         self._dir_top_level_path = os.environ.get("DIR_PATH")
-        self._dir_path = os.environ.get("DIR_PATH") + r"\**\*.crv"
+        self._dir_path = os.environ.get("DIR_PATH") + r"\**\*.c?v"
 
         list_temp : List[File] = []
-        for path in glob.glob(self._dir_path):
+        for path in glob.glob(self._dir_path, recursive=True):
             f = File(file_path=path, dir_top_level_path=self._dir_top_level_path)
             list_temp.append(f)
 

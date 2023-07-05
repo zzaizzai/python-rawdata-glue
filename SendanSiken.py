@@ -23,9 +23,15 @@ class SendanSiken():
         return self._file_c
         
     def set_df_init(self, file_c: File):
-        df = pd.read_csv(file_c.path, encoding='shift_jis', header=0)
-        if len(df.columns) == 1 :
+        print(file_c.get_dir_name_upper_level())
+        try:
+            df = pd.read_csv(file_c.path, encoding='shift_jis', header=0)
+            if len(df.columns) == 1 :
+                df = pd.read_table(file_c.path, encoding='shift_jis', header=0)
+        except Exception as e:
             df = pd.read_table(file_c.path, encoding='shift_jis', header=0)
+            print(e)    
+        
         df_temp = df
         df_temp = df.drop(df.index[0])
         df_temp = df.reset_index()
@@ -45,14 +51,25 @@ class SendanSiken():
             pass
 
         # TODO get average tension 
-
+        tension_sum : float = 0
+        elon_sum : float = 0
+        count : int = 0 
         
-
-        # print("  " +  self.file_c.get_labo_no())
-        print("  " +  self.file_c.get_dir_name_upper_level())
-        # pprint.pprint(list_result, indent=2)
         for result in list_result:
-            print("elon: " + str(result["elon"]) + " strength: " +str( result["strength"]) + " tension(200mm2) : " + str(result["tension_s200"]))
+            tension_sum += float(result["tension_s200"])
+            elon_sum += float(result["elon"])
+            count += 1 
+        
+        tension_average = round(tension_sum / count, 2)    
+        elon_average = round(elon_sum / count , 2)
+        
+        # print("  " +  self.file_c.get_labo_no())
+        # print("  " +  self.file_c.get_dir_name_upper_level())
+        # pprint.pprint(list_result, indent=2)
+        # for result in list_result:
+            # print("elon: " + str(result["elon"]) + " strength: " +str( result["strength"]) + " tension(200mm2) : " + str(result["tension_s200"]))
+        
+        print(" tension_s200_ave: ", tension_average, " elon_ave: ", elon_average)
         print()
     
 
@@ -113,4 +130,3 @@ if __name__ == "__main__":
     aa = SendanSiken(df)
     index_max = aa.get_index_max_value(3)
     aa.get_all_max_values()
-    
