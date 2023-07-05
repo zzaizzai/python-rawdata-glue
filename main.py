@@ -1,8 +1,6 @@
 from FindFiles import FindFiles as ff 
 from SendanSiken import SendanSiken as ss
 from Service import Service
-import pandas as pd
-import os
 
 if __name__ == "__main__" :
     print("good")

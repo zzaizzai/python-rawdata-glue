@@ -14,10 +14,10 @@ class File:
     def dir_top_level_path(self) -> str :
         return self._dir_top_level_path
     
-    def get_labo_no(self):
+    def get_labo_no(self) -> str:
         return os.path.dirname(self.get_dir_name_upper_level())
 
-    def get_conditions(self):
+    def get_conditions(self) -> str:
         upper_names = self.get_dir_name_upper_level()
         upper_names_without_file_name = upper_names[ len(self.get_labo_no()) : - len(self.get_file_name_with_extension()) - 1]
         
@@ -26,7 +26,7 @@ class File:
         
         return upper_names_without_file_name
 
-    def get_file_name_without_extension(self):
+    def get_file_name_without_extension(self) -> str:
         return os.path.splitext(os.path.basename(self.path))[0]
 
     def get_file_name_with_extension(self) -> str :

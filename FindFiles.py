@@ -33,7 +33,7 @@ class FindFiles:
         return self._list_files_path
 
     @dir_path.setter
-    def dir_path(self, dir_path):
+    def dir_path(self, dir_path) -> None:
         self._dir_path = dir_path
         
     def print_list_files_path(self) -> None:
