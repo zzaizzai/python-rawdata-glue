@@ -67,6 +67,7 @@ class SendanSiken():
         for result in list_result:
             result["elon_ave"] = elon_average
             result["tension_s200_ave"] = tension_average
+            result["n"] = count
         
         # print("  " +  self.file_c.get_labo_no())
         # print("  " +  self.file_c.get_dir_name_upper_level())
