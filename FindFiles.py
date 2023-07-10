@@ -16,7 +16,9 @@ class FindFiles:
         
         self._dir_top_level_path = os.environ.get("DIR_PATH")
         self._dir_path = os.environ.get("DIR_PATH") + r"\**\*.c?v"
+        print(os.getcwd())
 
+        print(self.dir_path)
         list_temp : List[File] = []
         for path in glob.glob(self._dir_path, recursive=True):
 
