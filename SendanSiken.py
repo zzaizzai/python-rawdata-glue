@@ -112,6 +112,10 @@ class SendanSiken():
     def write_excel(self, df: pd.DataFrame) -> None:
         df.to_excel("result.xlsx")
         print("saved result data as a excel file")
+        
+    def write_excel(df: pd.DataFrame, sheet_name: str) -> None:
+        df.to_excel("result.xlsx", sheet_name=sheet_name)
+        print("saved result data as a excel file")
 
     def get_index_max_value(self, index_col: int) -> int:
         index_max = self.df.iloc[:,index_col]

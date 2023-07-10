@@ -19,6 +19,10 @@ class FindFiles:
 
         list_temp : List[File] = []
         for path in glob.glob(self._dir_path, recursive=True):
+
+            if "rlt" in path:
+                continue
+    
             f = File(file_path=path, dir_top_level_path=self._dir_top_level_path)
             list_temp.append(f)
 
