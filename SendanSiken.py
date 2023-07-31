@@ -25,14 +25,14 @@ class SendanSiken():
     def set_df_init(self, file_c: File) -> None:
         print(file_c.get_dir_name_upper_level())
 
-        df = pd.read_csv(file_c.path, header=0)
+        # df = pd.read_csv(file_c.path, header=0)
 
-        # try:
-        #     df = pd.read_csv(file_c.path, encoding='shift_jis', header=0)
-        #     if len(df.columns) == 1 :
-        #         df = pd.read_table(file_c.path, encoding='shift_jis', header=0)
-        # except Exception as e:
-        #     print(e)    
+        try:
+            df = pd.read_csv(file_c.path, encoding='shift_jis', header=0)
+            if len(df.columns) == 1 :
+                df = pd.read_table(file_c.path, encoding='shift_jis', header=0)
+        except Exception as e:
+            print(e)    
         
         df_temp = df
         df_temp = df.drop(df.index[0])
@@ -44,10 +44,10 @@ class SendanSiken():
 
     def get_all_max_values(self) -> List[dict]:
 
-        list_result = []
+        result_list = []
         try:
             while(True):
-                list_result.append(self.get_max_values())
+                result_list.append(self.get_max_values())
                 self.next_col()
         except:
             pass
@@ -56,7 +56,12 @@ class SendanSiken():
         elon_sum : float = 0
         count : int = 0 
         
-        for result in list_result:
+        for result in result_list:
+            tension_ave_str = str(result["tension_s200"])
+            
+            if tension_ave_str.isalpha():
+                continue
+            
             tension_sum += float(result["tension_s200"])
             elon_sum += float(result["elon"])
             count += 1 
@@ -64,29 +69,29 @@ class SendanSiken():
         tension_average : float = round(tension_sum / count, 2)    
         elon_average : float = round(elon_sum / count , 2)
 
-        for result in list_result:
+        for result in result_list:
+            result["n"] = count
             result["elon_ave"] = elon_average
             result["tension_s200_ave"] = tension_average
-            result["n"] = count
         
         # print("  " +  self.file_c.get_labo_no())
         # print("  " +  self.file_c.get_dir_name_upper_level())
-        pprint.pprint(list_result, indent=2)
+        # pprint.pprint(list_result, indent=2)
         # for result in list_result:
             # print("elon: " + str(result["elon"]) + " strength: " +str( result["strength"]) + " tension(200mm2) : " + str(result["tension_s200"]))
         
         print(" tension_s200_ave: ", tension_average, " elon_ave: ", elon_average)
-        print()
+        # print()
 
 
 
-        df_w = pd.DataFrame(list_result)
+        df_w = pd.DataFrame(result_list)
         df_w = df_w.drop(['col'], axis=1)
-        self.write_excel(df_w)
-        print(df_w)
+        # self.write_excel(df_w)
+        # print(df_w)
     
 
-        return list_result
+        return result_list
 
     def next_col(self) -> None:
         self.index_col_now  = self.index_col_now + 2  
@@ -124,7 +129,6 @@ class SendanSiken():
         max_index: int = -1 
         for i, value in enumerate(index_max):
             
-        
             if str(value).isalpha():
                 continue
             

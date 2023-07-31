@@ -1,15 +1,16 @@
-import pandas as pd
 from FindFiles import FindFiles as ff 
 from SendanSiken import SendanSiken as ss
-from Service import Service
+import ExcelControl
+import pandas as pd
+import os
+from pathlib import Path
+import glob
+
 
 if __name__ == "__main__" :
-    print("good")
+
     f = ff()
-    # f.print_list_files_path()
-    # print(f.list_files_path[0])
-    
-    
+
     all_values : list = []
     for aa in f.list_files_path:
     
@@ -25,10 +26,16 @@ if __name__ == "__main__" :
     df_w = df_w.drop(["col"], axis=1)
 
     df_w_dupl = df_w.drop_duplicates(subset=["path"], keep="first")
-    df_w_average = df_w_dupl[["path","tension_s200_ave", "elon_ave"]]
+    df_w_average = df_w_dupl[["path", "n" , "strength", "tension_s200_ave", "elon_ave"]]
 
     with pd.ExcelWriter("result.xlsx") as writer:
         df_w.to_excel(writer, sheet_name="all")
         df_w_average.to_excel(writer, sheet_name="average")
     
-    print("Done") 
+    ExcelControl.freeze_pane()
+    
+    print("Done")
+
+    
+    
+    
